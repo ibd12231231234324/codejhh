@@ -43,5 +43,9 @@ if __name__ == '__main__':
 def tohtml(Autoliste):
   response =""
   for Auto in Autoliste:
-    response+=Auto.get("Name")+": "+Auto.get("Preis")+"<br>"
+    response+=Auto.get("Name")+": "+str(Auto.get("Preis"))+"€, Stauraum: "+str(Auto.get("Stauraum"))+"l, Personenanzahl: "+str(Auto.get("Personenanzahl"))+" Sitze, Leistung: "+str(Auto.get("Leistung"))+"Ps, Umweltfreundlich: "+Auto.get("Umweltfreundlich")+"<br>"
   return response 
+
+
+
+print(tohtml(cars))
