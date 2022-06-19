@@ -1,3 +1,4 @@
+from urllib import response
 from flask import Flask, json, request
 
 cars = [{"Name": "Renault Alpine A110", "Personenanzahl": 2, "Stauraum": 196, "Preis": 58500, "Leistung": 258, "Umweltfreundlich": "Nein"},
@@ -36,3 +37,11 @@ if __name__ == '__main__':
     api.run(host="0.0.0.0") 
 
 #[{}]
+
+
+
+def tohtml(Autoliste):
+  response =""
+  for Auto in Autoliste:
+    response+=Auto.get("Name")+": "+Auto.get("Preis")+"<br>"
+  return response 
