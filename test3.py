@@ -1,5 +1,10 @@
-from urllib import response
 from flask import Flask, json, request
+def tohtml(Autoliste):
+  response =""
+  for Auto in Autoliste:
+    response+=Auto.get("Name")+": "+str(Auto.get("Preis"))+"€, Stauraum: "+str(Auto.get("Stauraum"))+"l, Personenanzahl: "+str(Auto.get("Personenanzahl"))+" Sitze, Leistung: "+str(Auto.get("Leistung"))+"Ps, Umweltfreundlich: "+Auto.get("Umweltfreundlich")+"<br>"
+  return response 
+
 
 cars = [{"Name": "Renault Alpine A110", "Personenanzahl": 2, "Stauraum": 196, "Preis": 58500, "Leistung": 258, "Umweltfreundlich": "Nein"},
  {"Name": "Corvette C8", "Personenanzahl": 2, "Stauraum": 357, "Preis": 72000, "Leistung": 495, "Umweltfreundlich": "Nein"},
@@ -20,16 +25,20 @@ api = Flask(__name__)
 @api.route('/search', methods=['GET'])
 def get_companies():
   args = request.args
+  print(type(args.get("preis")))
   cars2 = []
   for i in cars :
-    if i.get("Personenanzahl") >= int(args.get("sitz")):
+    #if i.get("Personenanzahl") >= int(args.get("sitz")) and i.get("Stauraum") >= int(args.get("stauraum")) and i.get("Preis") <= int(args.get("preis")) and i.get("Leistung") >= int(args.get("leistung")) and i.get("Umweltfreundlich") == args.get("klima"):
+     # cars2.append(i)
+    if i.get("Personenanzahl") >= int(args.get("sitz")) and i.get("Stauraum") >= int(args.get("stauraum")) and i.get("Preis") <= int(args.get("preis")) and i.get("Leistung") >= int(args.get("leistung")) and i.get("Umweltfreundlich") == args.get("klima"):
       cars2.append(i)
-    if int(args.get("sitz")) <= 2 and int(args.get("stauraum")) <= 200:
-       return json.dumps(cars[0])
+  #if int(args.get("sitz")) == 2 and int(args.get("stauraum")) == 200 and int(args.get("Preis")) == 50000 and int(args.get("Leistung")):
+   #    return json.dumps(cars[0])
     
- 
+    
+  return tohtml(cars2)
 
-  return json.dumps(cars2)
+ # return json.dumps(cars2)
 
   #return json.dumps(cars)
 
@@ -37,15 +46,3 @@ if __name__ == '__main__':
     api.run(host="0.0.0.0") 
 
 #[{}]
-
-
-
-def tohtml(Autoliste):
-  response =""
-  for Auto in Autoliste:
-    response+=Auto.get("Name")+": "+str(Auto.get("Preis"))+"€, Stauraum: "+str(Auto.get("Stauraum"))+"l, Personenanzahl: "+str(Auto.get("Personenanzahl"))+" Sitze, Leistung: "+str(Auto.get("Leistung"))+"Ps, Umweltfreundlich: "+Auto.get("Umweltfreundlich")+"<br>"
-  return response 
-
-
-
-print(tohtml(cars))
